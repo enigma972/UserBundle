@@ -1,0 +1,18 @@
+{
+    "name": "enigma972/user-bundle",
+    "description": "A Symfony user bundle.",
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Joel Lusavuvu",
+            "email": "lusavuvujoel39@gmail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Enigma972\\Bundle\\UserBundle\\": "src/"
+        }
+    }
+}

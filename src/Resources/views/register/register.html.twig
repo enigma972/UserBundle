@@ -1,0 +1,11 @@
+{% extends '@User/layout.html.twig' %}
+
+{% block title %}Registration{% endblock %}
+
+{% block section %}
+	<form action="{{ path('app_register') }}" method="post">
+		{{ form_widget(registrationForm) }}
+
+		<button type="submit" class="btn btn-light">Send</button>
+	</form>
+{% endblock %}

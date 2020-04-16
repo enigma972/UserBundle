@@ -29,7 +29,7 @@ class RegisterController extends Controller
     }
 
     /**
-     * @Route("", name="app_register")
+     * @Route("", name="enigma_user_register")
      */
     public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder)
     {
@@ -56,6 +56,7 @@ class RegisterController extends Controller
 			if (false === $this->getParameter('user.check_mail')) {
                 // Enable user account if check mail process is desabled
                 $user->setEnabled(true);
+                $this->em->flush();
 
                 // When triggering an event, you can optionally pass some information.
                 // For simple applications, use the GenericEvent object provided by Symfony
@@ -71,10 +72,10 @@ class RegisterController extends Controller
                 // See https://symfony.com/doc/current/components/event_dispatcher.html
                 $this->eventDispatcher->dispatch($event, Events::USER_REGISTERED);
                 
-				return $this->redirectToRoute('app_login');
+				return $this->redirectToRoute('enigma_user_security_login');
             }
             
-            return $this->redirectToRoute('app_register_check_mail');
+            return $this->redirectToRoute('enigma_user_register_check_mail');
         }
         
         return $this->render('@User/register/register.html.twig',[
@@ -83,7 +84,7 @@ class RegisterController extends Controller
     }
 
     /**
-     * @Route("/check/mail", name="app_register_check_mail")
+     * @Route("/check/mail", name="enigma_user_register_check_mail")
      */
     public function checkMail(Request $request)
     {
@@ -91,7 +92,7 @@ class RegisterController extends Controller
     }
 
     /**
-     * @Route("/confirm", name="app_register_confirm")
+     * @Route("/confirm", name="enigma_user_register_confirm")
      */
     public function confirm()
     {

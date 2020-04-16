@@ -3,7 +3,7 @@
 {% block title %}Registration{% endblock %}
 
 {% block section %}
-	<form action="{{ path('app_register') }}" method="post">
+	<form action="{{ path('enigma_user_register') }}" method="post">
 		{{ form_widget(registrationForm) }}
 
 		<button type="submit" class="btn btn-light">Send</button>

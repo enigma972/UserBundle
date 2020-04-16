@@ -215,9 +215,9 @@ abstract class User implements UserInterface
         return $this->lastLogin;
     }
 
-    public function setLastLogin(\DateTimeInterface $lastLogin): self
+    public function setLastLogin(): self
     {
-        $this->lastLogin = $lastLogin;
+        $this->lastLogin = new \DateTime('now');
 
         return $this;
     }

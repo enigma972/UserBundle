@@ -3,6 +3,7 @@
 namespace Enigma972\UserBundle\EventSubscriber;
 
 use Enigma972\UserBundle\Events;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Twig\Environment;
@@ -12,12 +13,14 @@ class UserWelcomeMailSubscriber implements EventSubscriberInterface
     private $mailer;
     private $urlGenerator;
     private $twig;
+    private $parameterBag;
 
-    public function __construct(\Swift_Mailer $mailer, UrlGeneratorInterface $urlGenerator, Environment $twig)
+    public function __construct(\Swift_Mailer $mailer, UrlGeneratorInterface $urlGenerator, Environment $twig, ParameterBagInterface $parameterBag)
     {
         $this->mailer = $mailer;
         $this->urlGenerator = $urlGenerator;
         $this->twig = $twig;
+        $this->parameterBag = $parameterBag;
     }
 
     public static function getSubscribedEvents()
@@ -44,12 +47,12 @@ class UserWelcomeMailSubscriber implements EventSubscriberInterface
         // email messages are created instantiating a Swift_Message class.
         // See https://symfony.com/doc/current/email.html#sending-emails
 
-        $messageContent = $this->twig->render('@User/register/mail/welcome_mail.html.twig');
+        $messageContent = $this->twig->render('@User/mail/welcome_mail.html.twig');
 
         $message = (new \Swift_Message())
             ->setSubject("Bienvenu !")
-            ->setTo($user->getMail())
-            ->setFrom('no-reply@futbol-scout.com')
+            ->setTo($user->getEmail())
+            ->setFrom($this->parameterBag->get('user.no_reply_mail'))
             ->setBody($messageContent, 'text/html');
 
         // In config/packages/dev/swiftmailer.yaml the 'disable_delivery' option is set to 'true'.

@@ -9,7 +9,9 @@
             "email": "lusavuvujoel39@gmail.com"
         }
     ],
-    "require": {},
+    "require": {
+        "symfony/swiftmailer-bundle": "^3.4"
+    },
     "autoload": {
         "psr-4": {
             "Enigma972\\UserBundle\\": "src/"

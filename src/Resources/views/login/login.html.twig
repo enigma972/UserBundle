@@ -1,0 +1,22 @@
+{% extends '@User/layout.html.twig' %}
+
+{% block title %}Login
+{% endblock %}
+
+{% block section %}
+	{% if error %}
+        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    {% endif %}
+
+	<form action="{{ path('enigma_user_security_login_check') }}" method="post">
+		Username: <input type="text" value="{{ last_username }}" required="required" name="username"/><br/>
+		Password: <input type="password" required="required" name="password"/><br/>
+		<input type="hidden" required="required" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+		
+		{# <label>
+			<input type="checkbox" name="_remember_me"> Remember me
+		</label> #}
+
+		<button type="submit" class="btn btn-light">login</button>
+	</form>
+{% endblock %}

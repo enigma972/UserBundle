@@ -27,5 +27,7 @@ class UserExtension extends Extension
         $config = $this->processConfiguration($configuration, $configs);
         
         $container->setParameter('user.check_mail', $config['check_mail']);
+        $container->setParameter('user.target', $config['target']);
+        $container->setParameter('user.no_reply_mail', $config['no_reply_mail']);
     }
 }

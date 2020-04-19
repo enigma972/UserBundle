@@ -49,4 +49,14 @@ final class Events
      * @var string
      */
     public const USER_PASSWORD_RESETED = 'user.password.reseted';
+
+    /**
+     * For the event naming conventions, see:
+     * https://symfony.com/doc/current/components/event_dispatcher.html#naming-conventions.
+     *
+     * @Event("Symfony\Component\EventDispatcher\GenericEvent")
+     *
+     * @var string
+     */
+    public const USER_PASSWORD_CHANGED = 'user.password.changed';
 }

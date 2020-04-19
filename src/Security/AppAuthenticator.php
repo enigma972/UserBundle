@@ -40,6 +40,8 @@ class AppAuthenticator extends AbstractGuardAuthenticator
     /** @var ParameterBagInterface $parameterBag */
     private $parameterBag;
 
+    /** @var User $user */
+    private $user = null;
 
 
     public function __construct(UrlGeneratorInterface $urlGenerator, CsrfTokenManagerInterface $csrfTokenManager, EntityManagerInterface $entityManager, UserPasswordEncoderInterface $passwordEncoder, ParameterBagInterface $parameterBag)
@@ -86,7 +88,7 @@ class AppAuthenticator extends AbstractGuardAuthenticator
             throw new CustomUserMessageAuthenticationException('Username could not be found.');
         }
 
-        return $user;
+        return $this->user = $user;
     }
 
     public function checkCredentials($credentials, UserInterface $user)
@@ -97,7 +99,13 @@ class AppAuthenticator extends AbstractGuardAuthenticator
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
     {
         if ($request->hasSession()) {
-            $request->getSession()->set(Security::AUTHENTICATION_ERROR, $exception);
+            if ($this->user instanceOf UserInterface && !$this->user->isEnabled()) {
+                $message = (string) "This account isn't enabled.";
+                $exception = new CustomUserMessageAuthenticationException($message);
+                $request->getSession()->set(Security::AUTHENTICATION_ERROR, $exception);
+            }else {
+                $request->getSession()->set(Security::AUTHENTICATION_ERROR, $exception);
+            }
         }
 
         $url = $this->getLoginUrl();
@@ -112,7 +120,10 @@ class AppAuthenticator extends AbstractGuardAuthenticator
         $user->setLastLogin();
         
         if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
-            if ($targetPath != $this->urlGenerator->generate('enigma_user_security_login_check', [], UrlGeneratorInterface::ABSOLUTE_URL)) {
+            if (
+                $targetPath != $this->urlGenerator->generate('enigma_user_security_login_check', [], UrlGeneratorInterface::ABSOLUTE_URL)
+                && $targetPath != $this->urlGenerator->generate('enigma_user_security_login', [], UrlGeneratorInterface::ABSOLUTE_URL)
+                ) {
                 return new RedirectResponse($targetPath);
             }
         }

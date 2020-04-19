@@ -2,13 +2,13 @@
 
 namespace Enigma972\UserBundle\EventSubscriber;
 
-use Enigma972\UserBundle\Events;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Twig\Environment;
+use Enigma972\UserBundle\Entity\ResetPasswordCode;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Twig\Environment;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
-class UserWelcomeMailSubscriber implements EventSubscriberInterface
+class ResetPasswordLinkMailSubscriber implements EventSubscriberInterface
 {
     private $mailer;
     private $urlGenerator;
@@ -22,20 +22,17 @@ class UserWelcomeMailSubscriber implements EventSubscriberInterface
         $this->twig = $twig;
         $this->parameterBag = $parameterBag;
     }
-
-    public static function getSubscribedEvents()
+    
+    public function onUserResetPasswordRequest($event)
     {
-        return [
-            Events::USER_REGISTERED => 'onUserRegistered',
-        ];
-    }
+        /** @var ResetPasswordCode $resetPasswordCode */
+        $resetPasswordCode = $event->getSubject();
 
-    public function onUserRegistered($event)
-    {
-        /** @var Comment $comment */
-        $user = $event->getSubject();
-
-        //$linkToPost = $this->urlGenerator->generate('home');
+        $resetLink = $this->urlGenerator->generate(
+                            'enigma_reset_password_confirm', [
+                            'token' =>  $resetPasswordCode->getToken(),
+                            ], UrlGeneratorInterface::ABSOLUTE_URL
+                        );
 
         /*$subject = $this->translator->trans('notification.comment_created');
         $body = $this->translator->trans('notification.comment_created.description', [
@@ -47,11 +44,15 @@ class UserWelcomeMailSubscriber implements EventSubscriberInterface
         // email messages are created instantiating a Swift_Message class.
         // See https://symfony.com/doc/current/email.html#sending-emails
 
-        $messageContent = $this->twig->render('@User/mail/welcome_mail.html.twig');
+        $messageContent = $this->twig->render(
+                                '@User/mail/reset_password_link_mail.html.twig', [
+                                'resetPasswordCode' =>  $resetPasswordCode,
+                                'resetLink'         =>  $resetLink,
+                            ]);
 
         $message = (new \Swift_Message())
-            ->setSubject("Welcome !")
-            ->setTo($user->getEmail())
+            ->setSubject($resetPasswordCode->getUser()->getUsername().', voici le lien pour réinitialiser votre mot de passe.')
+            ->setTo($resetPasswordCode->getUser()->getEmail())
             ->setFrom($this->parameterBag->get('user.no_reply_mail'))
             ->setBody($messageContent, 'text/html');
 
@@ -60,5 +61,12 @@ class UserWelcomeMailSubscriber implements EventSubscriberInterface
         // However, you can inspect the contents of those unsent emails using the debug toolbar.
         // See https://symfony.com/doc/current/email/dev_environment.html#viewing-from-the-web-debug-toolbar
         $this->mailer->send($message);
+    }
+
+    public static function getSubscribedEvents()
+    {
+        return [
+            'user.reset.password.request' => 'onUserResetPasswordRequest',
+        ];
     }
 }

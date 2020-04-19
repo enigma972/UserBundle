@@ -27,6 +27,13 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
                 ->children()
+                    ->scalarNode('reset_password_code_validity')
+                    ->isRequired()
+                    ->cannotBeEmpty()
+                ->end();
+
+        $rootNode
+                ->children()
                     ->scalarNode('target')
                     ->isRequired()
                     ->cannotBeEmpty()

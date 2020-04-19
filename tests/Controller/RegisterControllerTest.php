@@ -1,37 +1,33 @@
 <?php
-namespace Enigma972\UserBundle\Tests;
+namespace Enigma972\UserBundle\Tests\Controller;
 
+use Liip\TestFixturesBundle\Test\FixturesTrait;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 
 class RegisterControllerTest extends WebTestCase
 {
-    // public function testRegisterPageIsUp()
-    // {
-    //     $client = static::createClient();
-    //     $crawler = $client->request('GET', '/register');
+    use FixturesTrait;
 
-    //     $this->assertResponseIsSuccessful();
-    // }
 
     public function testUserRegistration()
     {
+        $this->loadFixtures();
+
         $client = static::createClient();
         $crawler = $client->request('GET', '/register');
 
         $this->assertResponseIsSuccessful();
-        //$csrfToken = $client->getContainer()->get('security.csrf.token_manager')->getToken('authenticate');
 
         $form = $crawler->selectButton('Send')->form([
-            'registration_form[username]'           =>  'enigma',
-            'registration_form[email]'              =>  'enigma@test.com',
-            'registration_form[password][first]'    =>  'enigma',
-            'registration_form[password][second]'   =>  'enigma',
-            //'registration_form[_token]'       =>  $csrfToken,
+            'registration_form[username]'           =>  'jhon',
+            'registration_form[email]'              =>  'jhon@gmail.com',
+            'registration_form[password][first]'    =>  '123456',
+            'registration_form[password][second]'   =>  '123456',
         ]);
+        
         $client->submit($form);
         
-        $target = $client->getContainer()->getParameter('user.target');
-        $this->assertResponseRedirects($target);
+        $this->assertResponseRedirects('/login');
     }
 }

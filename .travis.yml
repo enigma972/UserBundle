@@ -1,0 +1,16 @@
+language:  php
+
+php:
+  - '7.2'
+  - '7.3'
+  - '7.4'
+
+# before_install:
+
+install:
+  - cd ./../
+  - composer create-project symfony/website-skeleton sf4user-bundle ^4.*
+  - cd ./sf4user-bundle
+  - composer require enigma972/user-bunble
+
+script: vendor/bin/phpunit

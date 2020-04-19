@@ -1,0 +1,20 @@
+{% extends "@User/layout.html.twig" %}
+
+{% block section %}
+    {% if isValidToken %}
+        {% for message in app.session.flashBag.get('info') %}
+            {{ message }}
+        {% endfor %}
+
+        <form action="{{ path('enigma_reset_password_confirm', {token: token}) }}" method="post" accept-charset="UTF-8">
+            <label>Your email</label>
+            <input type="password" name="password_first" required="required"/>
+            <input type="password" name="password_second" required="required"/>
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('reset_password_confirm') }}" required="required"/>
+            <button>Reset password</button>
+        </form>
+    {% else %}
+        Token is not valid
+    {% endif %}
+    
+{% endblock %}

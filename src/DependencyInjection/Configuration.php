@@ -46,6 +46,13 @@ class Configuration implements ConfigurationInterface
                 ->cannotBeEmpty()
             ->end();
 
+        $rootNode
+            ->children()
+                ->booleanNode('not_send_welcome_mail')
+                ->isRequired()
+                ->defaultFalse()
+            ->end();
+
 
         return $treeBuilder;
     }

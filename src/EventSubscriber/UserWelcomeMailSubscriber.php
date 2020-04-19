@@ -32,6 +32,9 @@ class UserWelcomeMailSubscriber implements EventSubscriberInterface
 
     public function onUserRegistered($event)
     {
+        if ($this->parameterBag->get('user.not_send_welcome_mail')) {
+            return;
+        }
         /** @var Comment $comment */
         $user = $event->getSubject();
 

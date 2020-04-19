@@ -30,5 +30,6 @@ class UserExtension extends Extension
         $container->setParameter('user.reset_password_code_validity', $config['reset_password_code_validity']);
         $container->setParameter('user.target', $config['target']);
         $container->setParameter('user.no_reply_mail', $config['no_reply_mail']);
+        $container->setParameter('user.not_send_welcome_mail', $config['not_send_welcome_mail']);
     }
 }

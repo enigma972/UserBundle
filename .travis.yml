@@ -9,7 +9,7 @@ php:
 
 install:
   - cd ./../
-  - composer create-project symfony/website-skeleton sf4user-bundle "^4.*"
+  - composer create-project symfony/website-skeleton sf4user-bundle "4.*"
   - cd ./sf4user-bundle
   - composer require enigma972/user-bunble
 

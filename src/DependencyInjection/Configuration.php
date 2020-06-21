@@ -29,6 +29,8 @@ class Configuration implements ConfigurationInterface
                 ->children()
                     ->scalarNode('reset_password_code_validity')
                     ->isRequired()
+                    // The validity duration in secondes, 4 houres by default (14,400 sec)
+                    ->defaultValue(14400)
                     ->cannotBeEmpty()
                 ->end();
 
@@ -36,6 +38,7 @@ class Configuration implements ConfigurationInterface
                 ->children()
                     ->scalarNode('target')
                     ->isRequired()
+                    ->defaultValue('home')
                     ->cannotBeEmpty()
                 ->end();
 
@@ -43,6 +46,7 @@ class Configuration implements ConfigurationInterface
             ->children()
                 ->scalarNode('no_reply_mail')
                 ->isRequired()
+                ->defaultValue('no-reply@example.com')
                 ->cannotBeEmpty()
             ->end();
 

@@ -64,7 +64,7 @@ class ResetPasswordController extends Controller
         }
 
 
-        return $this->render('@User/reset_password/request.html.twig', [
+        return $this->render('@Enigma972User/reset_password/request.html.twig', [
                     'email'             =>  empty($email)? '': $email,
                     'resetLinkIsSended' =>  empty($resetLinkIsSended)? false: $resetLinkIsSended,
             ]);
@@ -114,7 +114,7 @@ class ResetPasswordController extends Controller
         }
 
 
-        return $this->render('@User/reset_password/confirm.html.twig', [
+        return $this->render('@Enigma972User/reset_password/confirm.html.twig', [
             'isValidToken' => $isValidToken,
             'token'         => $token,
         ]);

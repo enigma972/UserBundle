@@ -78,7 +78,7 @@ class RegisterController extends Controller
             return $this->redirectToRoute('enigma_user_register_check_mail');
         }
         
-        return $this->render('@User/register/register.html.twig',[
+        return $this->render('@Enigma972User/register/register.html.twig',[
             'registrationForm'  =>  $form->createView(),
         ]);
     }

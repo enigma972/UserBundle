@@ -13,7 +13,7 @@ class Configuration implements ConfigurationInterface
      */
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder('user');
+        $treeBuilder = new TreeBuilder('enigma972_user');
 
         /** @var NodeDefinition|ArrayNodeDefinition $rootNode */
         $rootNode = $treeBuilder->getRootNode();

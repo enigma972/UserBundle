@@ -52,6 +52,6 @@ class ChangePasswordController extends Controller
             }
         }
 
-        return $this->render('@User/profile/change_password.html.twig');
+        return $this->render('@Enigma972User/profile/change_password.html.twig');
     }
 }

@@ -2,6 +2,7 @@
     "name": "enigma972/user-bundle",
     "description": "A Symfony user bundle.",
     "type": "symfony-bundle",
+    "version": "v0.3.1",
     "license": "MIT",
     "authors": [
         {
@@ -10,7 +11,22 @@
         }
     ],
     "require": {
-        "symfony/swiftmailer-bundle": "^3.4"
+        "php": "^7.1.3",
+        "ext-pdo_sqlite": "*",
+        "symfony/swiftmailer-bundle": "^3.4",
+        "symfony/security-guard": "^5.0",
+        "doctrine/doctrine-bundle": "^2.0",
+        "symfony/twig-bundle": "^5.0"
+    },
+    "require-dev": {
+        "doctrine/doctrine-fixtures-bundle": "^3.0",
+        "liip/test-fixtures-bundle": "^1.0.0",
+        "symfony/browser-kit": "*",
+        "symfony/css-selector": "*",
+        "symfony/debug-bundle": "*",
+        "symfony/dotenv": "*",
+        "symfony/phpunit-bridge": "*",
+        "symfony/web-profiler-bundle": "*"
     },
     "autoload": {
         "psr-4": {
@@ -20,6 +36,11 @@
     "autoload-dev": {
         "psr-4": {
             "Enigma972\\UserBundle\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "symfony": {
+            "require": "^4.4|^5.0"
         }
     }
 }

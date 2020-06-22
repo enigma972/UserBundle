@@ -53,7 +53,7 @@ class UserPasswordChangedNotificationSubscriber implements EventSubscriberInterf
         // See https://symfony.com/doc/current/email.html#sending-emails
 
         $messageContent = $this->twig->render(
-            '@User/mail/password_chamged_notification.html.twig',
+            '@Enigma972User/mail/password_chamged_notification.html.twig',
             [
                 'resetPasswordCode' =>  $resetPasswordCode,
                 'resetLink'         =>  $resetLink,

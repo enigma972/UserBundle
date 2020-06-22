@@ -1,4 +1,4 @@
-{% extends "@User/layout.html.twig" %}
+{% extends "@Enigma972User/layout.html.twig" %}
 
 {% block section %}
     {% if isValidToken %}
@@ -12,7 +12,7 @@
 			<label>Repeat password</label>
             <input type="password" name="password_second" required="required"/><br/>
             <input type="hidden" name="_csrf_token" value="{{ csrf_token('reset_password_confirm') }}" required="required"/>
-            <button>Reset password</button>
+            <button>Change password</button>
         </form>
     {% else %}
         Token is not valid

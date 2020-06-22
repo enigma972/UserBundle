@@ -45,7 +45,7 @@ class ResetPasswordLinkMailSubscriber implements EventSubscriberInterface
         // See https://symfony.com/doc/current/email.html#sending-emails
 
         $messageContent = $this->twig->render(
-                                '@User/mail/reset_password_link_mail.html.twig', [
+                                '@Enigma972User/mail/reset_password_link_mail.html.twig', [
                                 'resetPasswordCode' =>  $resetPasswordCode,
                                 'resetLink'         =>  $resetLink,
                             ]);
@@ -53,7 +53,7 @@ class ResetPasswordLinkMailSubscriber implements EventSubscriberInterface
         $message = (new \Swift_Message())
             ->setSubject($resetPasswordCode->getUser()->getUsername().', voici le lien pour réinitialiser votre mot de passe.')
             ->setTo($resetPasswordCode->getUser()->getEmail())
-            ->setFrom($this->parameterBag->get('user.no_reply_mail'))
+            ->setFrom($this->parameterBag->get('enigma972_user.no_reply_mail'))
             ->setBody($messageContent, 'text/html');
 
         // In config/packages/dev/swiftmailer.yaml the 'disable_delivery' option is set to 'true'.

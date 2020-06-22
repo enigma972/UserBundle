@@ -25,6 +25,8 @@ class AppAuthenticator extends AbstractGuardAuthenticator
 {
     use TargetPathTrait;
 
+    public const LOGIN_ROUTE = 'enigma_user_security_login';
+
     /** @var UrlGeneratorInterface $urlGenerator */
     private $urlGenerator;
 
@@ -128,7 +130,7 @@ class AppAuthenticator extends AbstractGuardAuthenticator
             }
         }
 
-        return new RedirectResponse($this->urlGenerator->generate($this->parameterBag->get('user.target')));
+        return new RedirectResponse($this->urlGenerator->generate($this->parameterBag->get('enigma972_user.target')));
     }
 
     /**
@@ -151,6 +153,6 @@ class AppAuthenticator extends AbstractGuardAuthenticator
 
     public function getLoginUrl()
     {
-        return $this->urlGenerator->generate('enigma_user_security_login');
+        return $this->urlGenerator->generate(self::LOGIN_ROUTE);
     }
 }

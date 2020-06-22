@@ -8,7 +8,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 class Enigma972UserBundle extends Bundle
 {
-    public const VERSION = "v0.3.1";
+    public const VERSION = "v0.3.3";
 
     public function build(ContainerBuilder $container)
     {

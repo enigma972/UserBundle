@@ -53,7 +53,7 @@ class RegisterController extends Controller
 			$this->em->persist($user);
             $this->em->flush();
 
-			if (false === $this->getParameter('user.check_mail')) {
+			if (false === $this->getParameter('enigma972_user.check_mail')) {
                 // Enable user account if check mail process is desabled
                 $user->setEnabled(true);
                 $this->em->flush();

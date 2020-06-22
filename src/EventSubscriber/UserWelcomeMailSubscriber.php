@@ -50,12 +50,12 @@ class UserWelcomeMailSubscriber implements EventSubscriberInterface
         // email messages are created instantiating a Swift_Message class.
         // See https://symfony.com/doc/current/email.html#sending-emails
 
-        $messageContent = $this->twig->render('@User/mail/welcome_mail.html.twig');
+        $messageContent = $this->twig->render('@Enigma972User/mail/welcome_mail.html.twig');
 
         $message = (new \Swift_Message())
             ->setSubject("Welcome !")
             ->setTo($user->getEmail())
-            ->setFrom($this->parameterBag->get('user.no_reply_mail'))
+            ->setFrom($this->parameterBag->get('enigma972_user.no_reply_mail'))
             ->setBody($messageContent, 'text/html');
 
         // In config/packages/dev/swiftmailer.yaml the 'disable_delivery' option is set to 'true'.

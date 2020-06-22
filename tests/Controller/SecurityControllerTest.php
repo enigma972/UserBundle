@@ -86,7 +86,7 @@ class SecurityControllerTest extends WebTestCase
         ]);
         $client->submit($form);
         
-        $routeName = $this->getContainer()->getParameter('user.target');
+        $routeName = $this->getContainer()->getParameter('enigma972_user.target');
         $ulrGenerator = $this->getContainer()->get('router.default');
         $target = $ulrGenerator->generate($routeName);
 

@@ -40,7 +40,7 @@ class ResetPasswordController extends Controller
 
                     if ($user instanceOf User) {
                         $resetPasswordCode = (new ResetPasswordCode())->setUser($user);
-                        $timeValidity = $this->getParameter('user.reset_password_code_validity');
+                        $timeValidity = $this->getParameter('enigma972_user.reset_password_code_validity');
 
                         $expireTime = (new \DateTime())->add(new \DateInterval('PT'.$timeValidity.'S'));
                         $resetPasswordCode->setExpireAt($expireTime);

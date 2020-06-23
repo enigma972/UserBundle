@@ -10,53 +10,53 @@ class ResetPasswordControllerTest extends WebTestCase
 {
     use FixturesTrait;
 
+    protected $client;
+
     public function setUp()
     {
+        $this->client = static::createClient();
         $this->loadFixtures([Users::class]);
     }
 
     public function testRequestWithBabEmail()
     {
-        $client = static::createClient();
-        $crawler = $client->request('GET', '/reset/password/request');
+        $crawler = $this->client->request('GET', '/reset/password/request');
         $this->assertResponseIsSuccessful();
 
         $form = $crawler->selectButton('Send code')->form([
             'email' =>  'fake@mail.com',
         ]);
-        $client->submit($form);
+        $this->client->submit($form);
 
-        $output = $client->getResponse()->getContent();
+        $output = $this->client->getResponse()->getContent();
         $this->assertContains('User not found', $output);
     }
 
     public function testRequestWithInvalidEmail()
     {
-        $client = static::createClient();
-        $crawler = $client->request('GET', '/reset/password/request');
+        $crawler = $this->client->request('GET', '/reset/password/request');
         $this->assertResponseIsSuccessful();
 
         $form = $crawler->selectButton('Send code')->form([
             'email' =>  'fake@mail',
         ]);
-        $client->submit($form);
+        $this->client->submit($form);
         
-        $output = $client->getResponse()->getContent();
+        $output = $this->client->getResponse()->getContent();
         $this->assertContains('Is not valid email', $output);
     }
 
     public function testResetCodeRequest()
     {
-        $client = static::createClient();
-        $crawler = $client->request('GET', '/reset/password/request');
+        $crawler = $this->client->request('GET', '/reset/password/request');
         $this->assertResponseIsSuccessful();
 
         $form = $crawler->selectButton('Send code')->form([
             'email' =>  'john@gmail.com',
         ]);
-        $client->submit($form);
+        $this->client->submit($form);
         
-        $output = $client->getResponse()->getContent();
+        $output = $this->client->getResponse()->getContent();
         $this->assertContains('Reset link is sended', $output);
     }
 

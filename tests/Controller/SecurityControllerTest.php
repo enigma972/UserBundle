@@ -11,62 +11,62 @@ class SecurityControllerTest extends WebTestCase
 {
     use FixturesTrait;
 
+    protected $client;
+
     public function setUp()
     {
+        $this->client = static::createClient();
         $this->loadFixtures([Users::class]);
     }
 
     public function testLoginWithBadUsername()
     {
-        $client = static::createClient();
-        $crawler = $client->request('GET', '/login');
+        $crawler = $this->client->request('GET', '/login');
         $this->assertResponseIsSuccessful();
 
         $form = $crawler->selectButton('login')->form([
             'username' => 'johny',
             'password' => 'fakepassword'
         ]);
-        $client->submit($form);
+        $this->client->submit($form);
         $this->assertResponseRedirects('/login');
 
-        $client->followRedirect();
-        $output = $client->getResponse()->getContent();
+        $this->client->followRedirect();
+        $output = $this->client->getResponse()->getContent();
         $this->assertContains('Username could not be found.', $output);
     }
 
     public function testLoginWithBadPassword()
     {
-        $client = static::createClient();
-        $crawler = $client->request('GET', '/login');
+        $crawler = $this->client->request('GET', '/login');
         $this->assertResponseIsSuccessful();
 
         $form = $crawler->selectButton('login')->form([
             'username' => 'john',
             'password' => 'fakepassword'
         ]);
-        $client->submit($form);
+        $this->client->submit($form);
         $this->assertResponseRedirects('/login');
 
-        $client->followRedirect();
-        $output = $client->getResponse()->getContent();
+        $this->client->followRedirect();
+        $output = $this->client->getResponse()->getContent();
         $this->assertContains('Invalid credentials.', $output);
     }
 
     public function testLoginWithNotEnabledUSer()
     {
-        $client = static::createClient();
-        $crawler = $client->request('GET', '/login');
+        $crawler = $this->client->request('GET', '/login');
         $this->assertResponseIsSuccessful();
 
         $form = $crawler->selectButton('login')->form([
             'username' => 'jane',
             'password' => 'user'
         ]);
-        $client->submit($form);
+        $this->client->submit($form);
         $this->assertResponseRedirects('/login');
 
-        $client->followRedirect();
-        $output = $client->getResponse()->getContent();
+        $this->client->followRedirect();
+        $output = $this->client->getResponse()->getContent();
         $this->assertSelectorExists('.alert.alert-danger');
         
         // This assertion don't work
@@ -75,16 +75,14 @@ class SecurityControllerTest extends WebTestCase
 
     public function testSuccessfullLogin()
     {
-        $client = static::createClient();
-
-        $crawler = $client->request('GET', '/login');
+        $crawler = $this->client->request('GET', '/login');
         $this->assertResponseIsSuccessful();
 
         $form = $crawler->selectButton('login')->form([
             'username' => 'john',
             'password' => 'user'
         ]);
-        $client->submit($form);
+        $this->client->submit($form);
         
         $routeName = $this->getContainer()->getParameter('enigma972_user.target');
         $ulrGenerator = $this->getContainer()->get('router.default');

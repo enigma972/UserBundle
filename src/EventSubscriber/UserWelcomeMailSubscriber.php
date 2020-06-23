@@ -32,7 +32,7 @@ class UserWelcomeMailSubscriber implements EventSubscriberInterface
 
     public function onUserRegistered($event)
     {
-        if ($this->parameterBag->get('user.not_send_welcome_mail')) {
+        if ($this->parameterBag->get('enigma972_user.not_send_welcome_mail')) {
             return;
         }
         /** @var Comment $comment */

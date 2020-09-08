@@ -12,4 +12,4 @@ install:
   - cd user-bundle
   - composer install
 
-script: php bin/phpunit
+script: php bin/phpunit 

@@ -8,6 +8,8 @@ php:
 # before_install:
 
 install:
+  - git clone -b enigma972-user-bundle https://github.com/enigma972/symfony-testing-package user-bundle
+  - cd user-bundle
   - composer install
 
-script: vendor/bin/phpunit
+script: php bin/phpunit

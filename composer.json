@@ -2,7 +2,6 @@
     "name": "enigma972/user-bundle",
     "description": "A Symfony user bundle.",
     "type": "symfony-bundle",
-    "version": "v0.4",
     "license": "MIT",
     "authors": [
         {
